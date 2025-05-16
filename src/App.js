@@ -51,7 +51,6 @@ function App() {
         <Route exact path='/'><Conversations /></Route>
         <Route exact path='/conversations'><Conversations /></Route>
         <Route exact path='/interact/:conversationId'><Interact /></Route>
-        <Route exact path='/about'><About /></Route>
       </Switch>
     </Router>
   );

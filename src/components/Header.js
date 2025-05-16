@@ -1,52 +1,109 @@
-
-
 // React imports
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 // Material UI components
-import { Button, IconButton } from '@mui/material';
-import { AppBar, Box, Toolbar, Typography} from '@mui/material';
-import { Link } from 'react-router-dom';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 
 // Amplify imports
 import Auth from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 
-
 const Header = () => {
+  const history = useHistory();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-    let history = useHistory()
-    const signout = async () => {
-        try {
-            await Auth.signOut();
-            Hub.dispatch('UI Auth', {   // channel must be 'UI Auth'
-                event: 'AuthStateChange',    // event must be 'AuthStateChange'
-                message: 'signedout'    // message must be 'signedout'
-            });
-        } catch (error) {
-            console.log('error signing out: ', error);
-        }
+  const signout = async () => {
+    try {
+      await Auth.signOut();
+      Hub.dispatch('UI Auth', {
+        event: 'AuthStateChange',
+        message: 'signedout'
+      });
+    } catch (error) {
+      console.log('error signing out: ', error);
     }
+  };
 
-    return (
-        <Box sx={{flexGrow: 1}}>
-            <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
-                <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
-                        <MenuIcon></MenuIcon>
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>Cloud Assistant</Typography>
-                    <Button component={Link} to="/conversations" color="inherit">Conversations</Button>
-                    {/* <Button component={Link} to="/interact" color="inherit">Interact</Button> */}
-                    <Button component={Link} to="/about" color="inherit">About</Button>
-                    <Button color="inherit" onClick={signout} >Sign Out</Button>
- 
-                </Toolbar>
-            </AppBar>
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
-        </Box>
-    )
-}
+  const drawerList = (
+    <List>
+      <ListItem button component={Link} to="/conversations" onClick={toggleDrawer}>
+        <ListItemText primary="Conversations" />
+      </ListItem>
+      <ListItem button onClick={() => { toggleDrawer(); signout(); }}>
+        <ListItemText primary="Sign Out" />
+      </ListItem>
+    </List>
+  );
 
-export default Header
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: '#000000'
+        }}
+      >
+        <Toolbar>
+          {isMobile && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <strong>Group5 Assistant</strong>
+            <Typography variant="caption" sx={{ display: 'block', color: '#ccc', fontSize: '0.75rem' }}>
+              Your Cloud Bot
+            </Typography>
+          </Typography>
+
+          {!isMobile && (
+            <>
+              <Button component={Link} to="/conversations" color="inherit">
+                Conversations
+              </Button>
+              <Button color="inherit" onClick={signout}>
+                Log Out
+              </Button>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+        {drawerList}
+      </Drawer>
+    </Box>
+  );
+};
+
+export default Header;

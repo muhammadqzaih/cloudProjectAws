@@ -163,7 +163,7 @@ const ResponseCard = ({intent, cardDescription, data}) => {
                 {Object.keys(data).length > 0 && 
                     <CardActions spacing={0} mt={0} pt={0}>
                         <Button size="small" endIcon={<LaunchIcon/>}>Explore in Console</Button>
-                        <Button size="small">Share</Button>
+          
                     </CardActions>                
                 }
 
