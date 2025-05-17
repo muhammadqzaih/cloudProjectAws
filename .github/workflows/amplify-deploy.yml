@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider  # <-- set this globally to fix the OpenSSL error
 
     steps:
       - name: ⬇️ Checkout code
@@ -43,10 +45,13 @@ jobs:
           aws-region: us-east-1
 
       - name: 🔄 Pull Amplify backend
-        run: amplify pull --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
+        run: amplify init --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
         env:
           AMPLIFY_FRONTEND: javascript
           AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
 
+      - name: 🏗️ Build React app
+        run: npm run build
+
       - name: 🚀 Deploy to Amplify
-        run: amplify publish --yes
+        run: amplify publish --yes --skip-build
