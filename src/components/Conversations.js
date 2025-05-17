@@ -135,7 +135,7 @@ const Conversations = () => {
 
 
         <Dialog open={createDialogOpen} onClose={() => (handleCreateDialog(false))}>
-          <DialogTitle>Create New Conversation</DialogTitle>
+          <DialogTitle>New Conversation</DialogTitle>
           <DialogContent>
             <DialogContentText>
               To create a new conversation with the assistant, please provide a conversation title and description.
