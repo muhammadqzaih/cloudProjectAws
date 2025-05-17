@@ -31,11 +31,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: 🐍 Setup Python and dependencies for Lambda packaging
+      - name: 🐍 Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: 📦 Set up Python Virtual Environment & Pipenv
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip python3-venv
-          pip3 install --user pipenv
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install pipenv
+          echo "✅ Python venv and pipenv setup completed."
 
       - name: 🔄 Pull Amplify backend
         run: amplify init --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
