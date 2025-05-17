@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider  # <-- set this globally to fix the OpenSSL error
 
     steps:
       - name: ⬇️ Checkout code
@@ -20,8 +22,6 @@ jobs:
 
       - name: 📦 Install Node.js dependencies
         run: npm install
-        env:
-          CI: false
 
       - name: 📥 Install Amplify CLI
         run: npm install -g @aws-amplify/cli
@@ -53,5 +53,5 @@ jobs:
       - name: 🏗️ Build React app
         run: npm run build
 
-      - name: 🚀 Deploy to Amplify (skip build)
+      - name: 🚀 Deploy to Amplify
         run: amplify publish --yes --skip-build
