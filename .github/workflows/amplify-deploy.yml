@@ -44,9 +44,6 @@ jobs:
 
       - name: 🔄 Pull Amplify backend
         run: amplify init --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
-        env:
-          AMPLIFY_FRONTEND: javascript
-          AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
 
       - name: 🚀 Deploy to Amplify
         run: amplify publish --yes
