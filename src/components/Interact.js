@@ -103,7 +103,8 @@ const Interact = () => {
   const [answers, setAnswers] = useState(initialAnswers)
   const [loading, setLoading] = useState(false)
   const [userInitials, setUserInitials] = useState("")
-
+  const [_ , setConversation] = useState(null)
+ 
   // References
   const scrollRef = useRef(null)
   const dialogScrollRef = useRef(null)
