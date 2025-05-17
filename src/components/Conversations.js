@@ -1,6 +1,6 @@
 
 // React imports
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import Auth from '@aws-amplify/auth'
 
 // GraphQL code imports
-import { createConversation, deleteConversation } from '../graphql/mutations'
+import { createConversation} from '../graphql/mutations'
 import { conversationsByUser } from '../graphql/queries'
 
 
