@@ -13,7 +13,6 @@ import '@fontsource/roboto/700.css';
 // Import key components
 import Interact from './components/Interact'
 import Conversations from './components/Conversations';
-import About from './components/About';
 import Header from './components/Header';
 
 // Bot related imports

@@ -25,7 +25,6 @@ import Auth from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 
 const Header = () => {
-  const history = useHistory();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [drawerOpen, setDrawerOpen] = useState(false);

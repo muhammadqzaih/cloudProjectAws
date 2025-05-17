@@ -10,7 +10,7 @@ import { Box, Drawer, Toolbar, List, ListItem, ListItemText } from '@mui/materia
 import SendIcon from '@mui/icons-material/Send'
 import { IconButton } from '@mui/material';
 import { ListItemAvatar, Avatar } from '@mui/material';
-import { blue, orange } from '@mui/material/colors';
+import { blue  } from '@mui/material/colors';
 import ResponseCard from './ResponseCard';
 import MyTextField from './MyTextField';
 import { LinearProgress } from '@mui/material';
@@ -103,7 +103,6 @@ const Interact = () => {
   const [answers, setAnswers] = useState(initialAnswers)
   const [loading, setLoading] = useState(false)
   const [userInitials, setUserInitials] = useState("")
-  const [conversation, setConversation] = useState(null)
 
   // References
   const scrollRef = useRef(null)
