@@ -138,7 +138,7 @@ const Conversations = () => {
           <DialogTitle>Create Conversation</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To create a new conversation, please provide a conversation title and description.
+               create a new conversation, please provide a conversation title and description.
             </DialogContentText>
             <Stack>
               <TextField
