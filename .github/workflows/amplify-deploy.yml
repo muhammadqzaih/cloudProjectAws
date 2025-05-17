@@ -1,32 +1,41 @@
-name: Deploy to Amplify on Push
+name: Deploy to AWS Amplify
 
 on:
   push:
     branches:
-      - main  # or your branch name
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: ⚙️ Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install Amplify CLI
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 📥 Install Amplify CLI
         run: npm install -g @aws-amplify/cli
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: 🔐 Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          region: us-east-1 # Replace if your Amplify app is in another region
 
-      - name: Deploy to Amplify
+      - name: 🔄 Pull Amplify backend
+        run: amplify pull --yes --appId d1ikw4fh3cghia --envName dev
+        env:
+          AMPLIFY_FRONTEND: javascript
+          AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
+
+      - name: 🚀 Deploy to Amplify
         run: amplify publish --yes
