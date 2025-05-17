@@ -181,7 +181,7 @@ const Conversations = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you want to delete this conversation? All data and dialog information
+              Are you sure you want to delete this conversation  ? All data and dialog information
               associated with the conversation will be permanently deleted!
             </DialogContentText>
           </DialogContent>
