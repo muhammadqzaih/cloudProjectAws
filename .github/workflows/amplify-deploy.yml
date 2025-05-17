@@ -8,8 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: --openssl-legacy-provider  # <-- set this globally to fix the OpenSSL error
 
     steps:
       - name: ⬇️ Checkout code
@@ -20,22 +18,11 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 📦 Install Node.js dependencies
+      - name: 📦 Install dependencies
         run: npm install
 
       - name: 📥 Install Amplify CLI
         run: npm install -g @aws-amplify/cli
-
-      - name: 🐍 Set up Python 3.8
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.8'
-
-      - name: 🔧 Install Python tools globally
-        run: |
-          python -m pip install --upgrade pip
-          pip install pipenv virtualenv
-          echo "✅ pipenv and virtualenv are globally installed"
 
       - name: 🔐 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -44,14 +31,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: 🐍 Set up Python 3.8
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: 📦 Set up Python Virtual Environment & Pipenv
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install pipenv
+          echo "✅ Python venv and pipenv setup completed."
+
       - name: 🔄 Pull Amplify backend
         run: amplify init --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
         env:
           AMPLIFY_FRONTEND: javascript
           AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
 
-      - name: 🏗️ Build React app
-        run: npm run build
-
       - name: 🚀 Deploy to Amplify
-        run: amplify publish --yes --skip-build
+        run: amplify publish --yes
