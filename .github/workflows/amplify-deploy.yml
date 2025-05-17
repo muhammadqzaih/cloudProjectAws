@@ -29,7 +29,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: us-east-1 # Replace if your Amplify app is in another region
+          aws-region:: us-east-1 # Replace if your Amplify app is in another region
 
       - name: 🔄 Pull Amplify backend
         run: amplify pull --yes --appId d1ikw4fh3cghia --envName dev
