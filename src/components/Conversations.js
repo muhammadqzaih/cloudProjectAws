@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 // Material UI Imports
 import { Box } from '@mui/system'
 import { Stack } from '@mui/material'
-import { Button, Card, CardMedia, CardContent, CardActions, Typography, Grid } from '@mui/material'
+import { Button, Card,  CardContent, CardActions, Typography, Grid } from '@mui/material'
 // import { createTheme } from '@mui/system'
 import { TextField } from '@mui/material'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
@@ -20,8 +20,7 @@ import Auth from '@aws-amplify/auth'
 import { createConversation, deleteConversation } from '../graphql/mutations'
 import { conversationsByUser } from '../graphql/queries'
 
-// Other imports
-import image from '../images/banner.jpg'
+
 
 // // Create theme
 // const theme = createTheme({
@@ -81,7 +80,7 @@ const deleteConversationHandler = async (handleDeleteDialog, conversationToRemov
 
   // API call
   console.log("Removing conversation: ", conversationToRemove.id)
-  let result = await API.graphql(graphqlOperation(deleteConversation, { input: { id: conversationToRemove.id } }))
+
 
   // Remove from list
   setUserConversations(userConversations.filter((conversation) => conversation.id !== conversationToRemove.id))
