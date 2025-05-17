@@ -49,4 +49,6 @@ jobs:
           AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
 
       - name: 🚀 Deploy to Amplify
-        run: amplify publish --yes
+        run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          amplify publish --yes
