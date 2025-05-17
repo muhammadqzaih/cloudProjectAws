@@ -31,5 +31,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 # Replace if your Amplify app is in another region
 
+      - name: 🔄 Pull Amplify backend
+        run: amplify init --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
+        env:
+          AMPLIFY_FRONTEND: javascript
+          AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
+
       - name: 🚀 Deploy to Amplify
         run: amplify publish --yes
