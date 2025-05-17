@@ -135,7 +135,7 @@ const Conversations = () => {
 
 
         <Dialog open={createDialogOpen} onClose={() => (handleCreateDialog(false))}>
-          <DialogTitle>New Conversation</DialogTitle>
+          <DialogTitle>Add Conversation</DialogTitle>
           <DialogContent>
             <DialogContentText>
               To create a new conversation, please provide a conversation title and description.
