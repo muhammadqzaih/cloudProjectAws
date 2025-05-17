@@ -16,10 +16,10 @@ jobs:
       - name: ⚙️ Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '16'
 
       - name: 📦 Install Node.js dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 📥 Install Amplify CLI
         run: npm install -g @aws-amplify/cli
