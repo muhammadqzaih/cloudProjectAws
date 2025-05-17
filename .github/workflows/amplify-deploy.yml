@@ -32,7 +32,7 @@ jobs:
           aws-region: us-east-1 # Replace if your Amplify app is in another region
 
       - name: 🔄 Pull Amplify backend
-        run: amplify pull --yes --appId d1ikw4fh3cghia --envName sampledev
+        run: amplify pull --yes --appId d1ikw4fh3cghia --envName sampledev --accessToken ${{ secrets.AMPLIFY_ACCESS_TOKEN }}
         env:
           AMPLIFY_FRONTEND: javascript
           AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
