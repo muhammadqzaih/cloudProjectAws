@@ -20,6 +20,8 @@ jobs:
 
       - name: 📦 Install Node.js dependencies
         run: npm install
+        env:
+          CI: false
 
       - name: 📥 Install Amplify CLI
         run: npm install -g @aws-amplify/cli
@@ -48,7 +50,11 @@ jobs:
           AMPLIFY_FRONTEND: javascript
           AMPLIFY_FRONTEND_CONFIG: '{"config": {"SourceDir": "src","DistributionDir": "build","BuildCommand": "npm run build","StartCommand": "npm start"}}'
 
-      - name: 🚀 Deploy to Amplify
-        run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
-          amplify publish --yes
+      - name: 🏗️ Build React app
+        run: npm run build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+          CI: false
+
+      - name: 🚀 Deploy to Amplify (skip build)
+        run: amplify publish --yes --skip-build
